@@ -112,8 +112,9 @@ def run_all(files):
         bar = progress(fname)
         print(bar.next(), end='')
 
+        log.write('=' * 70 + '\n')
         log.write('Running ' + fname + '\n')
-        log.write('=' * 50 + '\n')
+        log.write('=' * 70 + '\n')
         try:
             proc = subprocess.Popen('./' + file, stdout=log)
             while True:
@@ -131,7 +132,7 @@ def run_all(files):
         except:
             print('\r' + bar.failed())
             failed += 1
-        log.write('=' * 70 + '\n')
+        log.write('=' * 70 + '\n\n\n')
         del bar
     log.close()
 
