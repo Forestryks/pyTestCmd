@@ -124,8 +124,9 @@ def run_all(files):
         bar = progress(fname)
         print(bar.next(), end='')
 
+        log.write('=' * 70 + '\n')
         log.write('Running ' + fname + '\n')
-        log.write('=' * 50 + '\n')
+        log.write('=' * 70 + '\n')
         try:
             pos = file.rfind('.')
             ext = file[pos + 1:]
@@ -148,7 +149,7 @@ def run_all(files):
         except:
             print('\r' + bar.failed())
             failed += 1
-        log.write('=' * 70 + '\n')
+        log.write('=' * 70 + '\n\n\n')
         del bar
     log.close()
 
