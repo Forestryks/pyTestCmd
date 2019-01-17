@@ -133,7 +133,7 @@ def run_all(files):
             if extList[ext][1] is None:
                 continue
             cmd = extList[ext][1].format(file[:pos])
-            proc = subprocess.Popen(cmd.split(), stdout=log)
+            proc = subprocess.Popen(cmd.split(), stdout=log, stderr=log)
             while True:
                 try:
                     res = proc.wait(timeout=0.1)
