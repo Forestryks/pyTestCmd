@@ -132,8 +132,11 @@ def run_all(files):
             ext = file[pos + 1:]
             if extList[ext][1] is None:
                 continue
+
+            log.flush()
             cmd = extList[ext][1].format(os.path.realpath(file[:pos]))
-            proc = subprocess.Popen(cmd.split(), stdout=log, cwd=os.path.dirname(os.path.realpath(file)))
+            proc = subprocess.Popen(cmd.split(), stdout=log, stderr=log, cwd=os.path.dirname(os.path.realpath(file)))
+
             while True:
                 try:
                     res = proc.wait(timeout=0.1)
