@@ -23,9 +23,9 @@ from sys import stderr, argv
 
 # ext : (compilation, run, cleanup)
 extList = {
-    'c': ('cc {0}.c -o {0}', '{0}', '{0}'),
-    'cpp': ('g++ {0}.cpp -o {0}', '{0}', '{0}'),
-    'py': (None, 'python3 {0}.py', None)
+    'c': ('gcc -I{1} -O0 {0}.c -o {0}', '{0}', '{0}'),
+    'cpp': ('g++ -I{1} -O0 {0}.cpp -o {0}', '{0}', '{0}'),
+    'py': (None, 'python3 {0}.py', None),
 }
 
 
@@ -61,7 +61,8 @@ def build_all(files):
         ext = file[pos + 1:]
         if extList[ext][0] is None:
             continue
-        cmd = extList[ext][0].format(file[:pos])
+        cwd = os.getcwd()
+        cmd = extList[ext][0].format(file[:pos], cwd)
         print(cmd)
         try:
             if os.system(cmd) != 0:
@@ -135,7 +136,7 @@ def run_all(files):
 
             log.flush()
             cmd = extList[ext][1].format(os.path.realpath(file[:pos]))
-            proc = subprocess.Popen(cmd.split(), stdout=log, stderr=log, cwd=os.path.dirname(os.path.realpath(file)))
+            proc = subprocess.Popen(cmd.split(), stdout=log, cwd=os.path.dirname(os.path.realpath(file)))
 
             while True:
                 try:
